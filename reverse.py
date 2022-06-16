@@ -38,6 +38,13 @@ fig = px.line(result, x=result.index, y="Score")
 
 fig.add_vline(x=9.5, line_width=3, line_dash="dash", line_color="green")
 
+# https://plotly.com/python/reference/layout/annotations/
+# https://stackoverflow.com/questions/62716521/plotly-how-to-add-text-to-existing-figure
+
+fig.add_annotation(text='Actuals', x=7, y=63, showarrow=False, font_size=20)
+
+fig.add_annotation(text='Forecast', x=12, y=63, showarrow=False, font_size=20)
+
 fig.write_html( 'output_file_name.html',
                    auto_open=True )
 
