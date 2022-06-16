@@ -20,6 +20,8 @@ fig1 = go.Figure(data=[go.Candlestick(x=df['Date'],
                                       low=df['Low'],
                                       close=df['Close'], showlegend=False)])
 
+
+
 fig1.write_html( 'output_file_name.html',
                    auto_open=True )
 
