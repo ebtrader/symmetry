@@ -1,0 +1,3 @@
+pick an anchor point
+subtract that point - current value
+apply that difference to all the candles that you want to project
