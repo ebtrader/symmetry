@@ -3,21 +3,18 @@ import pandas as pd
 import plotly.graph_objects as go
 
 # https://www.opentechguides.com/how-to/article/pandas/193/index-slice-subset.html
-# https://stackoverflow.com/questions/61802727/plotly-trouble-plotting-candlestick-graph-on-a-subplot
-
 
 ticker = 'NQ=F'
 
 # forward df
 data = yf.download(tickers=ticker, period='3mo', interval='1d')
-
 df = yf.download(tickers=ticker, period='3mo', interval='1d')
-# print(df)
-# df.to_csv('orig.csv')
+print(df)
+df.to_csv('orig.csv')
+
+
 
 df = df.reset_index()
-print(df)
-last_row = df.index[-1] + 0.5
 
 # df = df.reset_index(drop=True)
 
@@ -75,18 +72,14 @@ fig = go.Figure(data=[go.Candlestick(x=symmetric_df.index,
                                       low=symmetric_df['Low'],
                                       close=symmetric_df['Close'], showlegend=False)])
 
-fig.add_vline(x=last_row, line_width=3, line_dash="dash", line_color="green")
-
-fig.add_vline(x=idx1-0.5, line_width=3, line_dash="dash", line_color="blue")
-fig.add_vline(x=idx2+0.5, line_width=3, line_dash="dash", line_color="blue")
+fig.add_vline(x=64.5, line_width=3, line_dash="dash", line_color="green")
 
 # https://plotly.com/python/reference/layout/annotations/
 # https://stackoverflow.com/questions/62716521/plotly-how-to-add-text-to-existing-figure
-text_spacer = 6
 
-fig.add_annotation(text='Actuals', x=last_row - text_spacer, y=15000, showarrow=False, font_size=20)
+fig.add_annotation(text='Actuals', x=54, y=15000, showarrow=False, font_size=20)
 
-fig.add_annotation(text='Forecast', x=last_row + text_spacer, y=15000, showarrow=False, font_size=20)
+fig.add_annotation(text='Forecast', x=75, y=15000, showarrow=False, font_size=20)
 
 fig.update_layout(
     title=ticker, xaxis_rangeslider_visible=False)
