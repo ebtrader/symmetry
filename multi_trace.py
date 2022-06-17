@@ -23,8 +23,11 @@ fig.add_trace(go.Candlestick(x = df.index,
                             high = df['High']),
              row = 1, col = 1)
 
-fig.add_trace(go.Scatter(x = df.index, y = df['System Quality Number']),
-                         row = 2, col = 1)
+# fig.add_trace(go.Scatter(x = df.index, y = df['System Quality Number']),
+#                          row = 2, col = 1)
+
+fig.add_trace(go.Scatter(x = df.index, y = df['System Quality Number'], line=dict(color='#0000ff', width=5)),
+                         row = 1, col = 1)
 
 fig.add_trace(go.Scatter(x = df.index, y = df['Action']), row = 3, col =1)
 
