@@ -18,15 +18,6 @@ df = df.reset_index()
 print(df)
 last_row = df.index[-1] + 0.5
 
-# select by index
-select3 = df[df.index.isin({16})]  # Choose by index
-select4 = df[df.index.isin({22})]  # Choose by index
-
-idx1 = select3.index.item()
-idx2 = select4.index.item()
-
-selection_df = df.loc[idx1:idx2]
-
 # df = df.reset_index(drop=True)
 
 # selection_df = df.loc[1:5]
@@ -35,18 +26,18 @@ selection_df = df.loc[idx1:idx2]
 select = df[df['Date'].isin({'2022-06-13'})]  # Choose by date
 
 # Choose between 2 dates
-# select1 = df[df['Date'].isin({'2022-05-09'})]  # Choose by date
-# select2 = df[df['Date'].isin({'2022-05-26'})]  # Choose by date
-#
-# print(select1)
-# print(select2)
-#
-# idx1 = select1.index.item()
-# idx2 = select2.index.item()
-# print(idx1)
-# print(idx2)
-#
-# selection_df = df.loc[idx1:idx2]
+select1 = df[df['Date'].isin({'2022-05-09'})]  # Choose by date
+select2 = df[df['Date'].isin({'2022-05-26'})]  # Choose by date
+
+print(select1)
+print(select2)
+
+idx1 = select1.index.item()
+idx2 = select2.index.item()
+print(idx1)
+print(idx2)
+
+selection_df = df.loc[idx1:idx2]
 
 y0 = max(selection_df['High'])
 y1 = min(selection_df['Low'])

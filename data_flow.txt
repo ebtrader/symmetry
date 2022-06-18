@@ -1,0 +1,6 @@
+1. do the date range first
+2. cut up date range into
+    a. 'orig date range'
+    b. 'selection'
+    c. 'test range'
+3. apply 'selection' to 'test range'

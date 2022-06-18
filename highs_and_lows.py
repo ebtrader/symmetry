@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 ticker = 'NQ=F'
 
 # forward df
-# data = yf.download(tickers=ticker, period='3mo', interval='1d')
+data = yf.download(tickers=ticker, period='3mo', interval='1d')
 
 df = yf.download(tickers=ticker, period='3mo', interval='1d')
 # print(df)
@@ -18,15 +18,6 @@ df = df.reset_index()
 print(df)
 last_row = df.index[-1] + 0.5
 
-# select by index
-select3 = df[df.index.isin({16})]  # Choose by index
-select4 = df[df.index.isin({22})]  # Choose by index
-
-idx1 = select3.index.item()
-idx2 = select4.index.item()
-
-selection_df = df.loc[idx1:idx2]
-
 # df = df.reset_index(drop=True)
 
 # selection_df = df.loc[1:5]
@@ -35,24 +26,18 @@ selection_df = df.loc[idx1:idx2]
 select = df[df['Date'].isin({'2022-06-13'})]  # Choose by date
 
 # Choose between 2 dates
-# select1 = df[df['Date'].isin({'2022-05-09'})]  # Choose by date
-# select2 = df[df['Date'].isin({'2022-05-26'})]  # Choose by date
-#
-# print(select1)
-# print(select2)
-#
-# idx1 = select1.index.item()
-# idx2 = select2.index.item()
-# print(idx1)
-# print(idx2)
-#
-# selection_df = df.loc[idx1:idx2]
+select1 = df[df['Date'].isin({'2022-05-09'})]  # Choose by date
+select2 = df[df['Date'].isin({'2022-05-26'})]  # Choose by date
 
-y0 = max(selection_df['High'])
-y1 = min(selection_df['Low'])
+print(select1)
+print(select2)
 
-x0 = selection_df.index[0] - 0.5
-x1 = selection_df.index[-1] + 0.5
+idx1 = select1.index.item()
+idx2 = select2.index.item()
+print(idx1)
+print(idx2)
+
+selection_df = df.loc[idx1:idx2]
 
 print(selection_df)
 selection_df = selection_df.drop('Date', 1)
@@ -108,12 +93,8 @@ fig.add_trace(go.Scatter(x=forecast_df.index, y=forecast_df['Low'], line=dict(co
 
 fig.add_vline(x=last_row, line_width=3, line_dash="dash", line_color="green")
 
-# fig.add_vline(x=idx1-0.5, line_width=3, line_dash="dash", line_color="blue")
-# fig.add_vline(x=idx2+0.5, line_width=3, line_dash="dash", line_color="blue")
-
-fig.add_shape(type="rect",
-    x0=x0, y0=y0, x1=x1, y1=y1,
-    line=dict(color="RoyalBlue"),)
+fig.add_vline(x=idx1-0.5, line_width=3, line_dash="dash", line_color="blue")
+fig.add_vline(x=idx2+0.5, line_width=3, line_dash="dash", line_color="blue")
 
 # https://plotly.com/python/reference/layout/annotations/
 # https://stackoverflow.com/questions/62716521/plotly-how-to-add-text-to-existing-figure
