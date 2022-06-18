@@ -15,7 +15,7 @@ df1 = {'Score':[55,59,60,58,56,62,59,55,63,60]}
 df1 = pd.DataFrame(df1, columns=['Score'])
 print(df1)
 
-df2 = df1.iloc[::-1]
+df2 = df1.iloc[::-1] # this is how you reverse it
 print(df2)
 
 # https://www.geeksforgeeks.org/how-to-combine-two-dataframe-in-python-pandas/

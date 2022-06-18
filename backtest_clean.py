@@ -4,9 +4,9 @@ import plotly.graph_objects as go
 # https://www.opentechguides.com/how-to/article/pandas/193/index-slice-subset.html
 # https://stackoverflow.com/questions/61802727/plotly-trouble-plotting-candlestick-graph-on-a-subplot
 
-START = 98
-END = 119
-TARGET = 120
+START = 139
+END = 186
+TARGET = 202
 
 ticker = 'NQ=F'
 
@@ -41,7 +41,6 @@ last_row_select = selection_df.index[-1] + 1
 
 forecast_range_start = TARGET
 forecast_range_end = forecast_range_start + length_of_selection
-
 # select by index
 select5 = df[df.index.isin({forecast_range_start})]  # Choose by index
 select6 = df[df.index.isin({forecast_range_end})]  # Choose by index
@@ -56,6 +55,9 @@ y6 = min(forecast_range_df['Low'])
 
 x5 = forecast_range_df.index[0] - 0.5
 x6 = forecast_range_df.index[-1] + 0.5
+
+# take difference between 'high' of first df first row and second df last row
+# df_high = df['High'].iloc[-1]        # get last row of our starting point (if end of original df)
 
 df_high = forecast_range_df['High'].iloc[0]            # get first row of forecast range
 selection_df_high = selection_df['High'].iloc[0]       # get first row of selection
@@ -96,3 +98,17 @@ fig.update_layout(
 fig.write_html( 'output_file_name.html',
                    auto_open=True )
 
+# fig1 = go.Figure(data=[go.Candlestick(x=data.index,
+#                                       open=data['Open'],
+#                                       high=data['High'],
+#                                       low=data['Low'],
+#                                       close=data['Close'], showlegend=False)])
+#
+# fig1.update_layout(
+#     title=ticker, xaxis_rangeslider_visible=False)
+#
+# fig1.write_html( 'output_file_name1.html',
+#                    auto_open=True )
+#
+#
+#
