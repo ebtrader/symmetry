@@ -67,7 +67,7 @@ print(last_row_select)
 
 # take difference between 'high' of first df first row and second df last row
 df_high = df['High'].iloc[-1]        # get last row of our starting point
-selection_df_high = selection_df['High'].iloc[0]       # get first row of selection
+selection_df_high = selection_df['High'].iloc[-1]       # get first row of selection
 diff = selection_df_high - df_high
 print(diff)
 
