@@ -4,9 +4,9 @@ import plotly.graph_objects as go
 # https://www.opentechguides.com/how-to/article/pandas/193/index-slice-subset.html
 # https://stackoverflow.com/questions/61802727/plotly-trouble-plotting-candlestick-graph-on-a-subplot
 
-START = 74
-END = 99
-TARGET = 159
+START = 2
+END = 112
+TARGET = 141
 
 ticker = 'NQ=F'
 
