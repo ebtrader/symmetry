@@ -5,3 +5,8 @@ keep looping a gauss section until you hit:
 get the slope of a section based on the gauss and draw the trendline and channel
 
 place the strike at the first ATR
+
+choose how many times to loop a section and keep looping it
+
+or add multiple sections together to make a story
+

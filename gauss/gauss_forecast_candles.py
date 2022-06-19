@@ -6,8 +6,8 @@ from finta import TA
 import math
 from datetime import timedelta
 
-START = 52
-END = 70
+START = 79
+END = 90
 
 # ticker = yf.Ticker(symbol)
 
@@ -283,12 +283,6 @@ fig1.update_layout(
 )
 
 fig1.add_vline(x=last_row, line_width=3, line_dash="dash", line_color="green")
-
-text_spacer = 6
-
-fig1.add_annotation(text='Actuals', x=last_row - text_spacer, y=15000, showarrow=False, font_size=20)
-
-fig1.add_annotation(text='Forecast', x=last_row + text_spacer, y=15000, showarrow=False, font_size=20)
 
 fig1.write_html( 'output_file_name.html',
                    auto_open=True )
