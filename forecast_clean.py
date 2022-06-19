@@ -5,8 +5,8 @@ import plotly.graph_objects as go
 # https://www.opentechguides.com/how-to/article/pandas/193/index-slice-subset.html
 # https://stackoverflow.com/questions/61802727/plotly-trouble-plotting-candlestick-graph-on-a-subplot
 
-START = 57
-END = 63
+START = 12
+END = 43
 
 ticker = 'NQ=F'
 
@@ -70,8 +70,8 @@ print(last_row_select)
 
 # take difference between 'high' of first df first row and second df last row
 df_high = df['High'].iloc[-1]        # get last row of our starting point
-selection_df_high = selection_df['High'].iloc[0]       # get first row of selection
-# selection_df_high = selection_df['High'].iloc[-1]       # get last row of selection for reversal
+# selection_df_high = selection_df['High'].iloc[0]       # get first row of selection
+selection_df_high = selection_df['High'].iloc[-1]       # get last row of selection for reversal
 diff = selection_df_high - df_high
 print(diff)
 
@@ -81,8 +81,8 @@ print(diff)
 selection_df -= diff
 print(selection_df)
 
-# # use for reversal
-# selection_df = selection_df.iloc[::-1]
+# # USE FOR REVERSAL
+selection_df = selection_df.iloc[::-1]
 
 df = df.drop('Date', 1)
 print(df)
