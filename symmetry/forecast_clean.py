@@ -67,7 +67,7 @@ last_row_select = selection_df.index[-1] + 1
 print(last_row_select)
 # selection_df.set_index('Date', inplace=True)
 
-
+# calculate diff
 # take difference between 'high' of first df first row and second df last row
 df_high = df['High'].iloc[-1]        # get last row of our starting point
 # selection_df_high = selection_df['High'].iloc[0]       # get first row of selection

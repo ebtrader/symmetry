@@ -118,9 +118,9 @@ df2['lower_band_1'] = (df2['Line'] - multiplier_1 * df2['ATR']).round(2)
 df2['upper_band_2'] = df2['Line'] + multiplier_2 * df2['ATR'].round(2)
 df2['lower_band_2'] = df2['Line'] - multiplier_2 * df2['ATR'].round(2)
 
+df2.reset_index(drop=True)
 
-
-fig1 = go.Figure(data=[go.Candlestick(x=df2['date'],
+fig1 = go.Figure(data=[go.Candlestick(x=df2.index,
                                       open=df2['open'],
                                       high=df2['high'],
                                       low=df2['low'],
@@ -130,7 +130,7 @@ fig1 = go.Figure(data=[go.Candlestick(x=df2['date'],
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['upper_band'].round(2),
         name='upper band',
         mode="lines",
@@ -140,7 +140,7 @@ fig1.add_trace(
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['lower_band'].round(2),
         name='lower band',
         mode="lines",
@@ -150,7 +150,7 @@ fig1.add_trace(
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['upper_band_1'].round(2),
         name='upper band_1',
         mode="lines",
@@ -160,7 +160,7 @@ fig1.add_trace(
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['lower_band_1'].round(2),
         name='lower band_1',
         mode="lines",
@@ -170,7 +170,7 @@ fig1.add_trace(
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['Line'],
         name="WMA",
         mode="lines",

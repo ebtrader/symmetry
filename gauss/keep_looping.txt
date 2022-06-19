@@ -3,3 +3,5 @@ keep looping a gauss section until you hit:
 2. congestion zone
 
 get the slope of a section based on the gauss and draw the trendline and channel
+
+place the strike at the first ATR

@@ -6,6 +6,9 @@ from finta import TA
 import math
 from datetime import timedelta
 
+START = 4
+END = 15
+
 # ticker = yf.Ticker(symbol)
 
 ticker = "NQ=F"
@@ -55,11 +58,6 @@ df2 = agg_df
 
 # print(df2)
 num_periods = 21
-df2['SMA'] = TA.SMA(df2, 21)
-df2['FRAMA'] = TA.FRAMA(df2, 10)
-df2['WMA'] = TA.WMA(df2, 9)
-df2['TEMA'] = TA.TEMA(df2, num_periods)
-# df2['VWAP'] = TA.VWAP(df2)
 
 # Gauss
 num_periods_gauss = 15.5
@@ -93,18 +91,6 @@ df2['ATR'] = df2['ATR_diff'].ewm(span=num_periods_ATR, adjust=False).mean()
 # df2['Line'] = df2['WMA'].round(2)
 df2['Line'] = df2['gauss']
 df2['line_change'] = df2['Line'] / df2['Line'].shift(1)
-df3 = pd.DataFrame()
-df3['date'] = df2['date']
-df3['close'] = df2['line_change']
-df3['open'] = df2['line_change']
-df3['high'] = df2['line_change']
-df3['low'] = df2['line_change']
-
-# calculate projection angle
-periods_change = 8  # drives the projection
-
-df3['change_SMA'] = TA.WMA(df3, periods_change)  # drives the projection
-df2['change_SMA'] = df3['change_SMA']
 
 df2['upper_band'] = df2['Line'] + multiplier * df2['ATR']
 df2['lower_band'] = df2['Line'] - multiplier * df2['ATR']
@@ -118,9 +104,53 @@ df2['lower_band_1'] = (df2['Line'] - multiplier_1 * df2['ATR']).round(2)
 df2['upper_band_2'] = df2['Line'] + multiplier_2 * df2['ATR'].round(2)
 df2['lower_band_2'] = df2['Line'] - multiplier_2 * df2['ATR'].round(2)
 
+# df2.reset_index(drop=True)
 
+print(df2)
 
-fig1 = go.Figure(data=[go.Candlestick(x=df2['date'],
+select3 = df2[df2.index.isin({START})]  # Choose by index
+select4 = df2[df2.index.isin({END})]  # Choose by index
+
+idx1 = select3.index.item()
+idx2 = select4.index.item()
+
+selection_df = df2.loc[idx1:idx2]
+
+print(selection_df)
+
+y0 = max(selection_df['high'])
+y1 = min(selection_df['low'])
+
+x0 = selection_df.index[0] - 0.5
+x1 = selection_df.index[-1] + 0.5
+length_of_selection = x1 - x0
+
+selection_df = selection_df.reset_index(drop=True)
+selection_df = selection_df.drop('date', 1)
+last_row_select = selection_df.index[-1] + 2
+
+# calculate diff
+# take difference between 'high' of first df first row and second df last row
+df_high = df2['high'].iloc[-1]        # get last row of our starting point
+selection_df_high = selection_df['high'].iloc[0]       # get first row of selection
+# selection_df_high = selection_df['high'].iloc[-1]       # get last row of selection for reversal
+diff = selection_df_high - df_high
+print(diff)
+
+selection_df -= diff
+
+frames = [df2, selection_df]
+symmetric_df = pd.concat(frames)
+
+symmetric_df = symmetric_df.reset_index(drop=True)
+
+symmetric_df = symmetric_df.reset_index(drop=True)
+
+# print(symmetric_df)
+forecast_df = symmetric_df.tail(last_row_select)
+# print(forecast_df)
+
+fig1 = go.Figure(data=[go.Candlestick(x=df2.index,
                                       open=df2['open'],
                                       high=df2['high'],
                                       low=df2['low'],
@@ -130,7 +160,7 @@ fig1 = go.Figure(data=[go.Candlestick(x=df2['date'],
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['upper_band'].round(2),
         name='upper band',
         mode="lines",
@@ -140,7 +170,7 @@ fig1.add_trace(
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['lower_band'].round(2),
         name='lower band',
         mode="lines",
@@ -150,7 +180,7 @@ fig1.add_trace(
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['upper_band_1'].round(2),
         name='upper band_1',
         mode="lines",
@@ -160,7 +190,7 @@ fig1.add_trace(
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['lower_band_1'].round(2),
         name='lower band_1',
         mode="lines",
@@ -170,13 +200,28 @@ fig1.add_trace(
 
 fig1.add_trace(
     go.Scatter(
-        x=df2['date'],
+        x=df2.index,
         y=df2['Line'],
         name="WMA",
         mode="lines",
         line=go.scatter.Line(color="blue"),
         )
 )
+
+fig1.add_trace(
+    go.Scatter(
+        x=forecast_df.index,
+        y=forecast_df['Line'],
+        name="WMA",
+        mode="lines",
+        line=go.scatter.Line(color="blue"),
+        )
+)
+
+
+fig1.add_shape(type="rect",
+    x0=x0, y0=y0, x1=x1, y1=y1,
+    line=dict(color="RoyalBlue"),)
 
 fig1.update_layout(
     hovermode='x unified',
