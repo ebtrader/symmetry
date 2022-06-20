@@ -6,10 +6,8 @@ from finta import TA
 import math
 from datetime import timedelta
 
-reversal = 0
-
-START = 80
-END = 95
+START = 52
+END = 70
 
 # ticker = yf.Ticker(symbol)
 
@@ -136,20 +134,15 @@ last_row_select = selection_df.index[-1] + 2
 # calculate diff
 # take difference between 'high' of first df first row and second df last row
 df_high = df2['high'].iloc[-1]        # get last row of our starting point
-
-if reversal == 1:
-    selection_df_high = selection_df['high'].iloc[-1]       # get last row of selection for reversal
-else:
-    selection_df_high = selection_df['high'].iloc[0]       # get first row of selection
-
+# selection_df_high = selection_df['high'].iloc[0]       # get first row of selection
+selection_df_high = selection_df['high'].iloc[-1]       # get last row of selection for reversal
 diff = selection_df_high - df_high
 print(diff)
 
 selection_df -= diff
 
 # # USE FOR REVERSAL
-if reversal == 1:
-    selection_df = selection_df.iloc[::-1]
+selection_df = selection_df.iloc[::-1]
 
 frames = [df2, selection_df]
 symmetric_df = pd.concat(frames)
