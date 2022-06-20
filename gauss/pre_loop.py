@@ -13,7 +13,7 @@ END = 95
 
 # ticker = yf.Ticker(symbol)
 
-ticker = "NQ=F"
+ticker = "XLF"
 
 # data = yf.download(tickers = ticker, start='2019-01-04', end='2021-06-09')
 data = yf.download(tickers=ticker, period="6mo", interval='1d')
