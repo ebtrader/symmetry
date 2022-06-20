@@ -13,7 +13,7 @@ END = 95
 
 # ticker = yf.Ticker(symbol)
 
-ticker = "NQ=F"
+ticker = "XLF"
 
 # data = yf.download(tickers = ticker, start='2019-01-04', end='2021-06-09')
 data = yf.download(tickers=ticker, period="6mo", interval='1d')
@@ -162,6 +162,8 @@ symmetric_df = symmetric_df.reset_index(drop=True)
 forecast_df = symmetric_df.tail(last_row_select)
 # print(forecast_df)
 
+text_y_position = forecast_df['high'].iloc[0] * 1.2
+
 fig1 = go.Figure(data=[go.Candlestick(x=df2.index,
                                       open=df2['open'],
                                       high=df2['high'],
@@ -296,9 +298,9 @@ fig1.add_vline(x=last_row, line_width=3, line_dash="dash", line_color="green")
 
 text_spacer = 6
 
-fig1.add_annotation(text='Actuals', x=last_row - text_spacer, y=15000, showarrow=False, font_size=20)
+fig1.add_annotation(text='Actuals', x=last_row - text_spacer, y=text_y_position, showarrow=False, font_size=20)
 
-fig1.add_annotation(text='Forecast', x=last_row + text_spacer, y=15000, showarrow=False, font_size=20)
+fig1.add_annotation(text='Forecast', x=last_row + text_spacer, y=text_y_position, showarrow=False, font_size=20)
 
 fig1.write_html( 'output_file_name.html',
                    auto_open=True )
