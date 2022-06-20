@@ -156,8 +156,6 @@ symmetric_df = pd.concat(frames)
 
 symmetric_df = symmetric_df.reset_index(drop=True)
 
-symmetric_df = symmetric_df.reset_index(drop=True)
-
 # print(symmetric_df)
 forecast_df = symmetric_df.tail(last_row_select)
 # print(forecast_df)
