@@ -12,3 +12,7 @@ or add multiple sections together to make a story
 
 loop down until you hit support, then do a reversal and loop up until you hit resistance and keep pinballing
 like PONG - the game
+
+keep appending a list with the end value of the df every time you loop through
+
+then loop through the list to make the vertical line separating each loop

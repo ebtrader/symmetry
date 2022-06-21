@@ -2,58 +2,60 @@ import plotly.graph_objects as go
 import yfinance as yf
 import pandas as pd
 
-counter = 0
-number_of_loops = 4
+number_of_times = 4
+
 ticker = 'NQ=F'
 
-df = yf.download(tickers=ticker, period="5d", interval='1d')
+# first loop
+
+df = yf.download(tickers=ticker, period="1mo", interval='1d')
+df = df.reset_index(drop=True)
 # valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
 # valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
 # data = yf.download("SPY AAPL", start="2017-01-01", end="2017-04-30")
 
 df = df.drop(['Adj Close', 'Volume'], axis=1)
-# print(df)
+print(df)
 
-# start loop
+# second loop
 
 df_start_high = df['High'].iloc[0]  # get first row of selection
 df_end_high = df['High'].iloc[-1]  # get last row of selection
 
 diff = df_start_high - df_end_high
-# print(diff)
+print(diff)
 
 selection_df = df - diff
-# print(selection_df)
+print(selection_df)
 
 frames = [df, selection_df]
 symmetric_df = pd.concat(frames)
-# print(symmetric_df)
+print(symmetric_df)
 
 symmetric_df = symmetric_df.reset_index(drop=True)
+print(symmetric_df)
 
-while counter < number_of_loops - 2:
-        # next loop
+# third loop
+counter = 0
 
-        df_start_high = selection_df['High'].iloc[0]  # get first row of selection
-        df_end_high = selection_df['High'].iloc[-1]  # get last row of selection
+while counter < number_of_times - 2:
+    df_end_high = symmetric_df['High'].iloc[-1]  # get last row of selection
 
-        diff = df_start_high - df_end_high
-        # print(diff)
+    diff = df_start_high - df_end_high
+    print(diff)
 
-        selection_df = selection_df - diff
-        # print(selection_df)
+    selection_df = df - diff
+    print(selection_df)
 
-        frames = [symmetric_df, selection_df]
-        symmetric_df = pd.concat(frames)
-        # print(symmetric_df)
+    frames = [symmetric_df, selection_df]
+    symmetric_df = pd.concat(frames)
+    print(symmetric_df)
 
-        symmetric_df = symmetric_df.reset_index(drop=True)
+    symmetric_df = symmetric_df.reset_index(drop=True)
+    print(symmetric_df)
+    counter += 1
 
-        # print(symmetric_df)
-        list = []
-        list.append(counter)
-        print(list)
-        counter += 1
+print(counter)
 
 fig = go.Figure(data=[go.Candlestick(x=symmetric_df.index,
                                       open=symmetric_df['Open'],
