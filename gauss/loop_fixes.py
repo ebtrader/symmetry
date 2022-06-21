@@ -17,6 +17,8 @@ df = df.reset_index(drop=True)
 df = df.drop(['Adj Close', 'Volume'], axis=1)
 print(df)
 
+length_df = df.index[-1] + 0.5
+
 # second loop
 
 df_start_high = df['High'].iloc[0]  # get first row of selection
@@ -62,6 +64,8 @@ fig = go.Figure(data=[go.Candlestick(x=symmetric_df.index,
                                       high=symmetric_df['High'],
                                       low=symmetric_df['Low'],
                                       close=symmetric_df['Close'])])
+
+fig.add_vline(x=length_df, line_width=3, line_dash="dash", line_color="green")
 
 fig.update_layout(
     hovermode='x unified',
